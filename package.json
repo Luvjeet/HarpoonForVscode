@@ -34,11 +34,7 @@
         {
           "type": "tree",
           "id": "harpoonview",
-          "name": "Harpoon",
-          "command": {
-            "id": "harpoonview.refresh",
-            "title": "Refresh Harpoon"
-          }
+          "name": "Harpoon"
         }
       ]
     },

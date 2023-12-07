@@ -16,13 +16,13 @@ export function activate(context: vscode.ExtensionContext) {
 
             if (activateEditor) {
                 const filePath = activateEditor.document.fileName as string;
+                const relativePath = vscode.workspace.asRelativePath(filePath);
 
                 const isMarked: boolean = harpoonFiles.some(
                     (currentFile: MarkedFile) =>
                         currentFile.path === relativePath
                 );
 
-                const relativePath = vscode.workspace.asRelativePath(filePath);
                 if (isMarked) {
                     return vscode.window.showInformationMessage(
                         "Already marked!"
