@@ -3,7 +3,7 @@
     "displayName": "Harpoon One Shot",
     "description": "File navigation everyone needs",
     "publisher": "Luvxjs",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "icon": "./assets/images.png",
     "engines": {
         "vscode": "^1.84.0"
