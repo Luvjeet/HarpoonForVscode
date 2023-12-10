@@ -1,81 +1,132 @@
 {
-  "name": "harpoon",
-  "displayName": "Harpoon",
-  "description": "File navigation everyone needs",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.84.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onLanguage"
-  ],
-  "main": "./dist/extension.js",
-  "contributes": {
-    "viewsWelcome": [
-      {
-        "view": "harpoonview",
-        "contents": "Mark a file to add to harpoon"
-      }
-    ],
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "mycontainer",
-          "title": "Harpoon",
-          "icon": "assets/harpoon.svg"
-        }
-      ]
+    "name": "spear",
+    "displayName": "Harpoon One Shot",
+    "description": "File navigation everyone needs",
+    "publisher": "Luvxjs",
+    "version": "0.0.1",
+    "icon": "./assets/images.png",
+    "engines": {
+        "vscode": "^1.84.0"
     },
-    "views": {
-      "mycontainer": [
-        {
-          "type": "tree",
-          "id": "harpoonview",
-          "name": "Harpoon"
-        }
-      ]
-    },
-    "commands": [
-      {
-        "command": "harpoon.markfile",
-        "title": "Mark a File in harpoon"
-      }
+    "categories": [
+        "Other"
     ],
-    "keybindings": [
-      {
-        "command": "harpoon.markfile",
-        "key": "ctrl+a",
-        "when": "editorTextFocus"
-      }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "yarn run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.84.0",
-    "@types/mocha": "^10.0.3",
-    "@types/node": "18.x",
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "@typescript-eslint/parser": "^6.9.0",
-    "eslint": "^8.52.0",
-    "glob": "^10.3.10",
-    "mocha": "^10.2.0",
-    "typescript": "^5.2.2",
-    "ts-loader": "^9.5.0",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4",
-    "@vscode/test-electron": "^2.3.6"
-  }
+    "activationEvents": [
+        "onLanguage"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "viewsWelcome": [
+            {
+                "view": "harpoonview",
+                "contents": "Mark a file to add to harpoon"
+            }
+        ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "mycontainer",
+                    "title": "Harpoon",
+                    "icon": "assets/harpoon.svg"
+                }
+            ]
+        },
+        "views": {
+            "mycontainer": [
+                {
+                    "type": "tree",
+                    "id": "harpoonview",
+                    "name": "Harpoon",
+                    "canDragAndDrop": true
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "harpoon.markfile",
+                "title": "Mark a File in harpoon"
+            },
+            {
+                "command": "harpoon.refreshTree",
+                "title": "Refresh Harpoon"
+            },
+            {
+                "command": "harpoon.deleteMarkedFile",
+                "title": "Delete Marked File"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "harpoon.markfile",
+                "key": "ctrl+shift+a"
+            },
+            {
+                "command": "harpoon.openMarkedFileAtIndex",
+                "key": "ctrl+g",
+                "args": {
+                    "index": 1
+                },
+                "when": "harpoonFilesAvailable"
+            },
+            {
+                "command": "harpoon.openMarkedFileAtIndex",
+                "key": "ctrl+h",
+                "args": {
+                    "index": 2
+                },
+                "when": "harpoonFilesAvailable"
+            },
+            {
+                "command": "harpoon.openMarkedFileAtIndex",
+                "key": "ctrl+t",
+                "args": {
+                    "index": 3
+                },
+                "when": "harpoonFilesAvailable"
+            },
+            {
+                "command": "harpoon.openMarkedFileAtIndex",
+                "key": "ctrl+n",
+                "args": {
+                    "index": 4
+                },
+                "when": "harpoonFilesAvailable"
+            }
+        ],
+        "menus": {
+            "view/item/context": [
+                {
+                    "command": "harpoon.deleteMarkedFile",
+                    "when": "harpoonFilesAvailable",
+                    "group": "inline"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "yarn run package",
+        "compile": "webpack",
+        "watch": "webpack --watch",
+        "package": "webpack --mode production --devtool hidden-source-map",
+        "compile-tests": "tsc -p . --outDir out",
+        "watch-tests": "tsc -p . -w --outDir out",
+        "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.84.0",
+        "@types/mocha": "^10.0.3",
+        "@types/node": "18.x",
+        "@typescript-eslint/eslint-plugin": "^6.9.0",
+        "@typescript-eslint/parser": "^6.9.0",
+        "eslint": "^8.52.0",
+        "glob": "^10.3.10",
+        "mocha": "^10.2.0",
+        "typescript": "^5.2.2",
+        "ts-loader": "^9.5.0",
+        "webpack": "^5.89.0",
+        "webpack-cli": "^5.1.4",
+        "@vscode/test-electron": "^2.3.6"
+    }
 }

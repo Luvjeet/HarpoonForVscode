@@ -1,71 +1,27 @@
-# harpoon README
+# Harpoon README
 
-This is the README for your extension "harpoon". After writing up a brief description, we recommend including the following sections.
+A fast navigation which is already created by [ThePrimeagen](https://github.com/thePrimeagen/harpoon). This is an inspiration all rights belongs to [ThePrimeagen](https://github.com/thePrimeagen) and thank you for installing it please enjoy!
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Harpoon is a powerful file navigation extension for Visual Studio Code, designed to streamline your workflow by providing efficient file management capabilities. With Harpoon, you can easily mark and organize files, making it a breeze to navigate through your project's structure.
 
-For example if there is an image subfolder under your extension project workspace:
+## Key Features:
 
-\!\[feature X\]\(images/feature-x.png\)
+Mark Files Quickly: Use keyboard shortcuts to mark files and add them to your Harpoon collection.
+Organize Your Workspace: View and manage your marked files in a dedicated tree view directly within the Visual Studio Code interface.
+Intuitive File Navigation: Navigate through your project effortlessly with quick access to your marked files.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## How to Use:
 
-## Requirements
+Use Ctrl+A to mark a file and add it to Harpoon.
+Access your marked files in the dedicated Harpoon tree view in the Activity Bar.
+Organize, view, and jump to marked files with ease.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
+### Enhance your productivity with Harpoon – your go-to file navigation solution!
 
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+Initial release of Harpoon
 
 **Enjoy!**
