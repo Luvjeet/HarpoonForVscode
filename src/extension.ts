@@ -20,8 +20,7 @@ function handleOpenMarkedFileAtIndex(index: number) {
 function showTemporaryMessage(message: string, duration: number) {
     // Create a status bar item
     const statusBarItem = vscode.window.createStatusBarItem(
-        vscode.StatusBarAlignment.Left,
-        100
+        vscode.StatusBarAlignment.Right
     );
     statusBarItem.text = message;
     statusBarItem.show();
@@ -34,17 +33,19 @@ function showTemporaryMessage(message: string, duration: number) {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    let refreshCommandDisposable: vscode.Disposable | undefined;
+    // registering a new view
+    const treeDataProvider = new HarpoonTreeDataProvider();
+    const treeView = vscode.window.createTreeView("harpoonview", {
+        treeDataProvider,
+        showCollapseAll: true,
+    });
 
-    function registerRefreshCommand() {
-        if (!refreshCommandDisposable) {
-            refreshCommandDisposable = vscode.commands.registerCommand(
-                "harpoon.refreshTree",
-                () => treeDataProvider.refresh()
-            );
-            context.subscriptions.push(refreshCommandDisposable);
+    treeView.onDidChangeVisibility(() => {
+        if (treeView.visible) {
+            treeDataProvider.refresh();
         }
-    }
+    });
+
     const openMarkedFileDisposable = vscode.commands.registerCommand(
         "harpoon.openMarkedFileAtIndex",
         ({ index }: { index: number }) => handleOpenMarkedFileAtIndex(index)
@@ -57,6 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (activeEditor) {
                 const filePath = activeEditor.document.fileName as string;
                 const relativePath = vscode.workspace.asRelativePath(filePath);
+                const fileType = filePath.split("").pop() || "default";
 
                 const isMarked: boolean = harpoonFiles.some(
                     (currentFile: MarkedFile) =>
@@ -69,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
                         absPath: filePath,
                     });
                     // Update harpoon
-                    registerRefreshCommand();
+                    treeDataProvider.refresh();
                     showTemporaryMessage(`Marked File: ${relativePath}`, 2000);
                     const areMarkedFilesAvailable = harpoonFiles.length > 0;
                     if (areMarkedFilesAvailable) {
@@ -89,33 +91,29 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
     );
+
     const deleteMarkedFileDisposable = vscode.commands.registerCommand(
         "harpoon.deleteMarkedFile",
         (selectedFile: string) =>
             treeDataProvider.deleteMarkedFile(selectedFile)
     );
+    const moveMarkedFileDisposable = vscode.commands.registerCommand(
+        "harpoon.moveMarkedFile",
+        (selectedFile: string) => treeDataProvider.moveMarkedFile(selectedFile)
+    );
     context.subscriptions.push(deleteMarkedFileDisposable);
-
-    // registering a new view
-    const treeDataProvider = new HarpoonTreeDataProvider();
-    const treeView = vscode.window.createTreeView("harpoonview", {
-        treeDataProvider,
-    });
-
-    treeView.onDidChangeVisibility(() => {
-        if (treeView.visible) {
-            treeDataProvider.refresh();
-        }
-    });
+    context.subscriptions.push(moveMarkedFileDisposable);
     context.subscriptions.push(treeView);
     context.subscriptions.push(disposable);
 }
 
 class HarpoonTreeDataProvider implements vscode.TreeDataProvider<string> {
-    private _onDidChangeTreeData: vscode.EventEmitter<string | null> =
-        new vscode.EventEmitter<string | null>();
-    readonly onDidChangeTreeData: vscode.Event<string | null> =
-        this._onDidChangeTreeData.event;
+    private _onDidChangeTreeData: vscode.EventEmitter<
+        undefined | null | void | string
+    > = new vscode.EventEmitter<undefined | null | void>();
+    readonly onDidChangeTreeData: vscode.Event<
+        undefined | null | void | string
+    > = this._onDidChangeTreeData.event;
 
     getTreeItem(element: string): vscode.TreeItem | Thenable<vscode.TreeItem> {
         return {
@@ -128,9 +126,41 @@ class HarpoonTreeDataProvider implements vscode.TreeDataProvider<string> {
         return harpoonFiles.map((markedFile) => markedFile.relPath);
     }
 
+    moveMarkedFile(selectedFile: string) {
+        vscode.window
+            .showInputBox({
+                prompt: "Enter the new index value for the marked file",
+                value: "1", //default value
+            })
+            .then((value) => {
+                if (value) {
+                    const newIndex = parseInt(value);
+                    if (
+                        !isNaN(newIndex) &&
+                        newIndex > 0 &&
+                        newIndex <= harpoonFiles.length
+                    ) {
+                        // Move the file to the new index
+                        const index = harpoonFiles.findIndex(
+                            (file) => file.relPath === selectedFile
+                        );
+                        if (index !== -1) {
+                            const [movedFile] = harpoonFiles.splice(index, 1);
+                            harpoonFiles.splice(newIndex - 1, 0, movedFile);
+                            this.refresh();
+                        }
+                    } else {
+                        vscode.window.showErrorMessage(
+                            "Invalid index. Please enter a valid index."
+                        );
+                    }
+                }
+            });
+    }
+
     deleteMarkedFile(selectedFile: string) {
         const index = harpoonFiles.findIndex(
-            (file) => file.absPath === selectedFile
+            (file) => file.relPath === selectedFile
         );
         if (index !== -1) {
             harpoonFiles.splice(index, 1);
@@ -139,7 +169,7 @@ class HarpoonTreeDataProvider implements vscode.TreeDataProvider<string> {
     }
 
     refresh(): void {
-        this._onDidChangeTreeData.fire("harpoon.refreshTree");
+        this._onDidChangeTreeData.fire("");
     }
 }
 

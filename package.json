@@ -4,7 +4,7 @@
     "description": "File navigation everyone needs",
     "publisher": "Luvxjs",
     "version": "0.2.0",
-    "icon": "./assets/HarpoonFinal.png",
+    "icon": "./assets/HarpoonNew.jpg",
     "engines": {
         "vscode": "^1.84.0"
     },
@@ -27,7 +27,7 @@
                 {
                     "id": "mycontainer",
                     "title": "Harpoon",
-                    "icon": "assets/harpoon.svg"
+                    "icon": "assets/Harpoon2.svg"
                 }
             ]
         },
@@ -52,13 +52,23 @@
             },
             {
                 "command": "harpoon.deleteMarkedFile",
-                "title": "Delete Marked File"
+                "icon": "assets/Delete.svg",
+                "title": "Delete"
+            },
+            {
+                "command": "harpoon.moveMarkedFile",
+                "title": "Move"
             }
         ],
         "keybindings": [
             {
                 "command": "harpoon.markfile",
                 "key": "ctrl+shift+a"
+            },
+            {
+                "command": "harpoon.markfile",
+                "key": "cmd+shift+a",
+                "when": "isMac"
             },
             {
                 "command": "harpoon.openMarkedFileAtIndex",
@@ -70,11 +80,27 @@
             },
             {
                 "command": "harpoon.openMarkedFileAtIndex",
+                "key": "cmd+g",
+                "args": {
+                    "index": 1
+                },
+                "when": "harpoonFilesAvailable && isMac"
+            },
+            {
+                "command": "harpoon.openMarkedFileAtIndex",
                 "key": "ctrl+h",
                 "args": {
                     "index": 2
                 },
                 "when": "harpoonFilesAvailable"
+            },
+            {
+                "command": "harpoon.openMarkedFileAtIndex",
+                "key": "cmd+h",
+                "args": {
+                    "index": 2
+                },
+                "when": "harpoonFilesAvailable && isMac"
             },
             {
                 "command": "harpoon.openMarkedFileAtIndex",
@@ -86,19 +112,39 @@
             },
             {
                 "command": "harpoon.openMarkedFileAtIndex",
+                "key": "cmd+t",
+                "args": {
+                    "index": 3
+                },
+                "when": "harpoonFilesAvailable && isMac"
+            },
+            {
+                "command": "harpoon.openMarkedFileAtIndex",
                 "key": "ctrl+n",
                 "args": {
                     "index": 4
                 },
                 "when": "harpoonFilesAvailable"
+            },
+            {
+                "command": "harpoon.openMarkedFileAtIndex",
+                "key": "cmd+n",
+                "args": {
+                    "index": 4
+                },
+                "when": "harpoonFilesAvailable && isMac"
             }
         ],
         "menus": {
             "view/item/context": [
                 {
+                    "group": "inline",
                     "command": "harpoon.deleteMarkedFile",
-                    "when": "harpoonFilesAvailable",
-                    "group": "inline"
+                    "when": "harpoonFilesAvailable"
+                },
+                {
+                    "command": "harpoon.moveMarkedFile",
+                    "when": "harpoonFilesAvailable"
                 }
             ]
         }
