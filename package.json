@@ -3,7 +3,7 @@
     "displayName": "Harpoon 2.0",
     "description": "File navigation everyone needs",
     "publisher": "Luvjeet Singh",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "icon": "./assets/HarpoonNew.jpg",
     "engines": {
         "vscode": "^1.84.0"
